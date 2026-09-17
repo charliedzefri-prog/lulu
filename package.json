@@ -1,6 +1,6 @@
 {
   "name": "lulu-messsssseldegerer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Лулу мессссссссссссссселдежерер — защищенный мессенджер в стиле старого интернета 90-х",
   "main": "server.js",
   "scripts": {
@@ -9,7 +9,6 @@
     "clean-logs": "rm -f logs/*.log npm-debug.log* 2>/dev/null; echo 'Логи подчищены, БД и файлы сохранены'"
   },
   "dependencies": {
-    "better-sqlite3": "^9.2.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1",
