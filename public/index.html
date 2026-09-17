@@ -142,6 +142,13 @@
           <div class="winamp">
             <div class="winamp-display" id="trackDisplay">■ STOPPED</div>
             <audio id="audioPlayer" controls preload="metadata"></audio>
+            <div class="volume-row">
+              <span class="vol-icon" id="muteBtn" title="Вкл/выкл звук">🔊</span>
+              <button class="vol-btn" id="volDownBtn" title="Тише">−</button>
+              <input type="range" id="volumeSlider" min="0" max="100" value="80" title="Громкость музыки">
+              <button class="vol-btn" id="volUpBtn" title="Громче">+</button>
+              <span class="vol-val" id="volumeVal">80%</span>
+            </div>
             <div class="playlist" id="playlist"></div>
             <div class="winamp-hint">Треки из твоих «.png» уже конвертированы в .mp3 и лежат на сервере даже после обновления Render (Persistent Disk)</div>
           </div>

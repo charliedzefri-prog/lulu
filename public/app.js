@@ -134,6 +134,7 @@ addContactBtn.onclick = doAddContact;
 searchInput.onkeydown = e=>{ if(e.key==='Enter') doSearch(); };
 
 let lastSearch = null;
+let lastQuery = null;
 async function doSearch(){
   const q = searchInput.value.trim();
   if(!q) return;
@@ -142,22 +143,46 @@ async function doSearch(){
   const users = await res.json();
   if(users.length){
     lastSearch = users[0];
-    searchResult.innerHTML = `Найден: <b>${users[0].username}</b> <img src="${users[0].avatar||''}" style="width:20px;height:20px;vertical-align:middle;border:1px solid #000;"> — нажми «+ ДОБАВИТЬ»`;
+    lastQuery = q;
+    // показываем ВСЕХ найденных, у каждого своя кнопка «в контакты»
+    searchResult.innerHTML = users.map(u=>{
+      const ava = u.avatar ? `<img src="${u.avatar}" style="width:20px;height:20px;vertical-align:middle;border:1px solid #000;">` : '👤';
+      return `<div style="margin:2px 0;">${ava} <b>${escapeHtml(u.username)}</b> <button class="btn-3d small" onclick="addContactByUsername('${escapeHtml(u.username).replace(/'/g,"&#39;")}')">+ В КОНТАКТЫ</button></div>`;
+    }).join('') + `<div class="small">или нажми «+ ДОБАВИТЬ» — добавится: <b>${escapeHtml(users[0].username)}</b></div>`;
   } else {
     lastSearch=null;
+    lastQuery=null;
     searchResult.textContent='Не найдено. Только реальные логины, без фейков!';
   }
 }
+// добавление по точному логину (вызывается из кнопки у каждого найденного)
+window.addContactByUsername = async(username)=>{
+  if(!username) return;
+  searchResult.textContent='Добавляю '+username+'...';
+  try{
+    const res = await fetch('/api/contacts/add', {method:'POST', headers:{'Content-Type':'application/json','x-token':token}, body: JSON.stringify({username})});
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error||'Ошибка');
+    searchResult.textContent=`✓ Добавлен ${username}`;
+    searchInput.value='';
+    lastSearch=null; lastQuery=null;
+    await loadContacts();
+    await loadChats();
+    if(data.chatId) openChat(data.chatId);
+  }catch(e){ alert(e.message); }
+};
 async function doAddContact(){
-  const q = searchInput.value.trim() || (lastSearch && lastSearch.username);
+  const inputVal = searchInput.value.trim();
+  // FIX: если поиск уже нашёл человека — берём ТОЧНЫЙ логин из результата,
+  // а не то, что осталось в поле ввода (там может быть часть логина).
+  let q;
+  if(lastSearch && lastSearch.username && (!inputVal || inputVal===lastQuery || inputVal.toLowerCase()===lastSearch.username.toLowerCase())){
+    q = lastSearch.username;
+  } else {
+    q = inputVal || (lastSearch && lastSearch.username);
+  }
   if(!q) return alert('Введи логин');
-  const res = await fetch('/api/contacts/add', {method:'POST', headers:{'Content-Type':'application/json','x-token':token}, body: JSON.stringify({username:q})});
-  const data = await res.json();
-  if(!res.ok) return alert(data.error);
-  searchResult.textContent=`✓ Добавлен ${q}`;
-  searchInput.value='';
-  await loadContacts();
-  await loadChats();
+  await window.addContactByUsername(q);
 }
 
 window.openPrivate = async(username)=>{
@@ -487,6 +512,34 @@ function initMusic(){
   const playlist = document.getElementById('playlist');
   const player = document.getElementById('audioPlayer');
   const display = document.getElementById('trackDisplay');
+  // --- ГРОМКОСТЬ МУЗЫКИ ---
+  const volSlider = document.getElementById('volumeSlider');
+  const volVal = document.getElementById('volumeVal');
+  const muteBtn = document.getElementById('muteBtn');
+  const volDownBtn = document.getElementById('volDownBtn');
+  const volUpBtn = document.getElementById('volUpBtn');
+  function renderVol(){
+    const v = Math.round(player.muted ? 0 : player.volume*100);
+    if(volSlider) volSlider.value = player.muted ? 0 : Math.round(player.volume*100);
+    if(volVal) volVal.textContent = v + '%';
+    if(muteBtn) muteBtn.textContent = (player.muted || player.volume===0) ? '🔇' : (player.volume<0.5 ? '🔉' : '🔊');
+  }
+  function setVol(pct){
+    pct = Math.max(0, Math.min(100, pct));
+    player.muted = false;
+    player.volume = pct/100;
+    try{ localStorage.setItem('lulu_volume', String(pct)); }catch{}
+    renderVol();
+  }
+  try{
+    const saved = localStorage.getItem('lulu_volume');
+    player.volume = saved!==null ? Math.max(0,Math.min(100,parseInt(saved,10)||0))/100 : 0.8;
+  }catch{ player.volume = 0.8; }
+  renderVol();
+  if(volSlider) volSlider.oninput = ()=> setVol(parseInt(volSlider.value,10)||0);
+  if(muteBtn) muteBtn.onclick = ()=>{ player.muted = !player.muted; renderVol(); };
+  if(volDownBtn) volDownBtn.onclick = ()=> setVol(Math.round(player.volume*100)-10);
+  if(volUpBtn) volUpBtn.onclick = ()=> setVol(Math.round(player.volume*100)+10);
   playlist.innerHTML = tracks.map((t,i)=> `<div class="track" data-i="${i}"><span>${i+1}. ${t.title}.mp3</span><span>►</span></div>`).join('');
   let cur = null;
   playlist.querySelectorAll('.track').forEach(el=>{

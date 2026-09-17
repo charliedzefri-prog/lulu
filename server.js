@@ -59,6 +59,12 @@ loadDB();
 // helpers — как в SQLite версии, но на массивах
 function getUserById(id){ return db.users.find(u=>u.id===id) || null; }
 function getUserByUsername(username){ return db.users.find(u=>u.username===username) || null; }
+// case-insensitive поиск (чтобы «Найден: Lulu» добавлялся даже если ввели «lulu»)
+function getUserByUsernameCI(username){
+  if(!username) return null;
+  const low = username.toLowerCase();
+  return db.users.find(u=>u.username && u.username.toLowerCase()===low) || null;
+}
 function addUser(u){ db.users.push(u); saveDB(); }
 function updateUserAvatar(id, avatar){ const u=getUserById(id); if(u){ u.avatar=avatar; saveDB(); } return u; }
 
@@ -235,7 +241,9 @@ app.get('/api/contacts', authMiddleware, (req,res)=>{
 app.post('/api/contacts/add', authMiddleware, (req,res)=>{
   const { username } = req.body;
   if(!username) return res.status(400).json({error:'Укажи логин'});
-  const target = getUserByUsername(username.trim());
+  const clean = username.trim();
+  // точное совпадение + fallback без учёта регистра (фикс «найден, но не добавляется»)
+  const target = getUserByUsername(clean) || getUserByUsernameCI(clean);
   if(!target) return res.status(404).json({error:'Пользователь не найден. Только реальные люди!'});
   if(target.id === req.user.id) return res.status(400).json({error:'Нельзя добавить себя'});
   if(db.contacts.some(c=>c.user_id===req.user.id && c.contact_id===target.id)) return res.status(400).json({error:'Уже в контактах'});
@@ -261,7 +269,8 @@ app.post('/api/groups/create', authMiddleware, (req,res)=>{
   const ids = [req.user.id];
   if(Array.isArray(members)){
     for(const uname of members){
-      const u = getUserByUsername(uname.trim());
+      const clean = (uname||'').trim();
+      const u = getUserByUsername(clean) || getUserByUsernameCI(clean);
       if(u && !ids.includes(u.id)) ids.push(u.id);
     }
   }
