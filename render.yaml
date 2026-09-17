@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: lulu-messenger
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.20.2
+      - key: PORT
+        value: 10000
+    # ВАЖНО: подключи Persistent Disk вручную в Dashboard (Render не позволяет диск в free через yaml на всех аккаунтах)
+    # Если диск доступен — смонтируй его:
+    # disk:
+    #   name: lulu-data
+    #   mountPath: /opt/render/project/src/data
+    #   sizeGB: 1
+    # + второй диск для uploads:
+    #   mountPath: /opt/render/project/src/uploads
+    # Альтернатива — один диск на всю папку проекта с сохранением ./data и ./uploads
+
+# Инструкция по сохранению данных на Render (ОБЯЗАТЕЛЬНО):
+# 1. В Render Dashboard -> твой сервис -> Environment -> Add Disk
+#    - Name: lulu-data
+#    - Mount Path: /opt/render/project/src/data
+#    - Size: 1 GB (минимум)
+# 2. Добавь второй диск:
+#    - Name: lulu-uploads
+#    - Mount Path: /opt/render/project/src/uploads
+#    - Size: 1 GB
+# 3. После этого БД (data/lulu.db), аватары (uploads/avatars), медиа (uploads/media), группы и ID — СОХРАНЯЮТСЯ даже после деплоя/обновления/рестарта.
+# 4. Логи при этом НЕ сохраняются на диск — они идут в stdout Render и ротируются. Для подчистки локальных логов:
+#    npm run clean-logs  (удаляет logs/*.log, не трогая диски)

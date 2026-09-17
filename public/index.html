@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лулу мессссссссссссссселдежерер™ — 1998 EDITION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+</style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-default">
+<!-- CRT overlay -->
+<div id="crt"></div>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="window login-window">
+  <div class="title-bar">
+    <span>💾 Лулу мессссссссссссссселдежерер — ВХОД.EXE</span>
+    <div class="win-btns"><span>_</span><span>□</span><span>X</span></div>
+  </div>
+  <div class="window-body">
+    <div class="login-header">
+      <div class="logo-ascii">
+<pre>
+ __    __  __  __  __    __  __
+|  |  |  ||  ||  ||  |  |  ||  |
+|  |__|  ||  ||  ||  |__|  ||  |
+|   __   ||  ||  ||   __   ||  |
+|  |  |  ||  |__| ||  |  |  ||__|
+|__|  |__||_______||__|  |__|(__)
+</pre>
+      </div>
+      <h1>Лулу мессссссссссссссселдежерер</h1>
+      <p class="blink">★ ЗАЩИЩЕННЫЙ МЕССЕНДЖЕР 1999 ★</p>
+      <p class="small">Только реальные люди! Никаких ботов, фейков и рекомендаций!<br>Вход без пароля — только логин. Как в старые добрые!</p>
+    </div>
+
+    <div class="login-form">
+      <label>ВВЕДИ ЛОГИН (2-20 символов):</label>
+      <div class="input-row">
+        <span class="prompt">C:\LULU&gt;</span>
+        <input id="loginInput" placeholder="например: lulu_98" maxlength="20" autocomplete="off">
+      </div>
+      <button id="loginBtn" class="btn-3d">ВОЙТИ / ЗАРЕГИСТРИРОВАТЬСЯ</button>
+      <div id="loginError" class="error"></div>
+      <div class="hint">
+        <marquee behavior="alternate" scrollamount="4">⚠ ВНИМАНИЕ: если логина нет — он создастся автоматически! Без email и без пароля! ⚠</marquee>
+        <p>🔒 Изоляция: только ты и реальные собеседники. Серверов-заглушек нет.</p>
+      </div>
+    </div>
+
+    <div class="footer-90s">
+      <span>Счетчик посещений:</span> <span class="counter">0000420</span>
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="btn-netscape" alt="netscape">
+      Лучший просмотр в Netscape Navigator 4.0 • 800x600 • 256 цветов
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app" class="hidden">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="top-left">
+      <span class="logo-mini">💿 Лулу мессссселдежерер v6.66</span>
+      <span class="status-real">● ТОЛЬКО РЕАЛЬНЫЕ ПОЛЬЗОВАТЕЛИ</span>
+    </div>
+    <div class="top-right">
+      <span id="myUsername"></span>
+      <img id="myAvatar" class="avatar-mini" src="" alt="ava">
+      <label class="btn-3d small file-label">СМЕНИТЬ АВУ <input type="file" id="avatarInput" accept="image/*" hidden></label>
+      <button id="logoutBtn" class="btn-3d small red">ВЫЙТИ</button>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <!-- LEFT: CONTACTS -->
+    <div class="panel contacts-panel window">
+      <div class="title-bar"><span>📇 Контакты — только добавленные вручную</span><span class="online-count" id="onlineCount">● 0 online</span></div>
+      <div class="panel-body">
+        <div class="add-contact">
+          <input id="searchInput" placeholder="логин друга...">
+          <button id="searchBtn" class="btn-3d small">НАЙТИ</button>
+          <button id="addContactBtn" class="btn-3d small">+ ДОБАВИТЬ</button>
+          <div id="searchResult" class="search-result"></div>
+        </div>
+        <div class="create-group">
+          <input id="groupName" placeholder="название группы">
+          <input id="groupMembers" placeholder="логины через запятую">
+          <button id="createGroupBtn" class="btn-3d small">СОЗДАТЬ ГРУППУ</button>
+        </div>
+        <div id="contactsList" class="contacts-list"></div>
+        <div id="chatsList" class="chats-list"></div>
+        <div class="panel-hint">Нет алгоритмов! Только те, кого ты добавил сам. Никаких «возможных друзей».</div>
+      </div>
+    </div>
+
+    <!-- CENTER: CHAT -->
+    <div class="panel chat-panel window">
+      <div class="title-bar" id="chatTitleBar"><span id="chatTitle">💬 Выбери чат слева</span><div><button id="voiceCallBtn" class="btn-3d small hidden">📞 ГОЛОС (LOW-FI)</button><button id="voiceHangBtn" class="btn-3d small red hidden">✕ СБРОС</button></div></div>
+      <div class="panel-body chat-body">
+        <div id="messages" class="messages">
+          <div class="welcome-90s">
+            <h2>Добро пожаловать в Лулу мессссселдежерер!</h2>
+            <p>Тут как в 1999: <b>ICQ + IRC + Winamp</b></p>
+            <ul>
+              <li>→ Пиши текст, кидай фото и видео — всё хранится на реальном сервере</li>
+              <li>→ Галочки ✓✓ только от живых людей</li>
+              <li>→ Голосовой чат — специально хриплый, 8kbps, без шумодава (как по диал-апу)</li>
+            </ul>
+            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='60'><rect width='200' height='60' fill='%23000' stroke='%23ff0'/><text x='10' y='35' fill='%23ff0' font-family='monospace' font-size='12'> UNDER CONSTRUCTION </text></svg>" alt="uc">
+          </div>
+        </div>
+        <div id="typingIndicator" class="typing"></div>
+        <div class="chat-input-area">
+          <div class="input-toolbar">
+            <label class="btn-3d small file-label">📷 ФОТО <input type="file" id="photoInput" accept="image/*" hidden></label>
+            <label class="btn-3d small file-label">🎬 ВИДЕО <input type="file" id="videoInput" accept="video/*" hidden></label>
+            <span id="fileName" class="file-name"></span>
+            <span class="delivered-hint">✓ = доставлено реальным юзером, ✓✓ = прочитано</span>
+          </div>
+          <div class="input-row">
+            <textarea id="msgInput" placeholder="Напиши сообщение... Enter — отправить, Shift+Enter — перенос" rows="2"></textarea>
+            <button id="sendBtn" class="btn-3d send-btn">ОТПРАВИТЬ ▶</button>
+          </div>
+          <div id="voiceStatus" class="voice-status hidden">
+            <span class="blink">● REC</span> <span id="voiceInfo">Голос: 8 kbps • без шумоподавления • как из подвала 2003</span>
+            <audio id="remoteAudio" autoplay></audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: MUSIC + GAMES + MODES -->
+    <div class="panel right-panel">
+      <!-- MUSIC -->
+      <div class="window small-window">
+        <div class="title-bar"><span>🎵 WinAmp — Доп. функция • .png → .mp3</span></div>
+        <div class="panel-body">
+          <div class="winamp">
+            <div class="winamp-display" id="trackDisplay">■ STOPPED</div>
+            <audio id="audioPlayer" controls preload="metadata"></audio>
+            <div class="playlist" id="playlist"></div>
+            <div class="winamp-hint">Треки из твоих «.png» уже конвертированы в .mp3 и лежат на сервере даже после обновления Render (Persistent Disk)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAMES -->
+      <div class="window small-window">
+        <div class="title-bar"><span>🎮 Мини-игры — как на диске «500 игр»</span></div>
+        <div class="panel-body">
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="saper">САПЕР</button>
+            <button class="tab-btn" data-tab="eggs">ЯЙЦА</button>
+          </div>
+          <div id="tab-saper" class="tab-content active">
+            <div id="minesweeper"></div>
+            <button id="newSaperBtn" class="btn-3d small">НОВАЯ ИГРА</button>
+          </div>
+          <div id="tab-eggs" class="tab-content">
+            <canvas id="eggCanvas" width="260" height="180"></canvas>
+            <div class="egg-controls"><button id="eggStartBtn" class="btn-3d small">СТАРТ</button> Счёт: <span id="eggScore">0</span> </div>
+            <p class="small">Лови яйца корзинкой ← →</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODES -->
+      <div class="window small-window">
+        <div class="title-bar"><span>👁 Режимы — нажми и офигей</span></div>
+        <div class="panel-body modes-grid">
+          <button class="mode-btn" data-mode="default">🌈 Обычный 90s</button>
+          <button class="mode-btn evil" data-mode="evil">😈 ЗЛАЯ ВЕРСИЯ</button>
+          <button class="mode-btn undertale" data-mode="undertale">💀 UNDERTALE</button>
+          <button class="mode-btn night" data-mode="nightvision">🌙 Ночное видение</button>
+          <button class="mode-btn nyan" data-mode="nyanket">🐱 Нянькет</button>
+          <button class="mode-btn psy" data-mode="psychedelic">🍄 Психоделика</button>
+          <button class="mode-btn meme" data-mode="memes">🤣 Мемасики</button>
+        </div>
+        <div class="mode-hint small">Все режимы — только CSS/оверлеи, чаты и файлы не трогают</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <span>© 1998-2006 Лулу Corp. • Сделано в Блокноте • <span class="blink">NEW!</span> Голосовой чат 8kbps — хрипит как надо • На Render: логи чистятся, а БД/аватары/чаты — сохраняются на диске</span>
+    <span id="connStatus">● offline</span>
+  </div>
+</div>
+
+<!-- Evil overlay -->
+<div id="evilOverlay" class="overlay hidden"></div>
+<div id="psyOverlay" class="psy hidden"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+/* Лулу мессссссссссссссселдежерер — стиль старого инета 90-х */
+* { box-sizing: border-box; }
+html,body { margin:0; padding:0; height:100%; }
+body {
+  font-family: 'VT323', 'Courier New', monospace;
+  background: #008080 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><rect width="40" height="40" fill="%23008080"/><text x="5" y="25" font-size="20" opacity="0.15">💾</text></svg>');
+  color: #000;
+  overflow: hidden;
+}
+.hidden{ display:none !important; }
+.blink{ animation: blink 1s steps(2, start) infinite; }
+@keyframes blink{ 50%{ opacity:0; } }
+
+/* CRT scanlines */
+#crt{
+  position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 1px, transparent 1px, transparent 3px);
+  opacity:0.35;
+}
+
+/* WINDOWS 98 */
+.window{
+  background:#c0c0c0;
+  border:2px solid #000;
+  border-right-color:#404040;
+  border-bottom-color:#404040;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080, 4px 4px 0 rgba(0,0,0,0.3);
+}
+.title-bar{
+  background: linear-gradient(90deg, #000080, #0000cd);
+  color:#fff;
+  padding:4px 6px;
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'Press Start 2P', monospace;
+  font-size:9px;
+  letter-spacing: -0.5px;
+  user-select:none;
+}
+.title-bar .win-btns span{
+  display:inline-block; width:16px; height:14px; background:#c0c0c0; color:#000; text-align:center; line-height:14px; border:1px solid #000; margin-left:2px; box-shadow: inset 1px 1px #fff, inset -1px -1px #808080; font-size:10px; cursor:pointer;
+}
+.window-body{ padding:10px; background:#c0c0c0; }
+
+/* LOGIN */
+.login-window{
+  width:520px; max-width:95vw; margin:30px auto; position:relative; z-index:10;
+}
+.logo-ascii pre{ font-size:6px; line-height:6px; color:#000080; margin:0; text-align:center; }
+.login-header h1{ text-align:center; font-family:'Press Start 2P'; font-size:13px; color:#ff0000; text-shadow:1px 1px 0 #fff, 2px 2px 0 #000; margin:8px 0; }
+.login-header .small{ text-align:center; font-size:16px; line-height:1.1; background:#ffffcc; border:1px dashed #000; padding:6px; }
+.input-row{ display:flex; align-items:center; gap:6px; background:#fff; border:2px inset #808080; padding:4px; margin:8px 0; }
+.prompt{ font-weight:bold; color:#000080; }
+.input-row input{ flex:1; border:none; outline:none; font-family:'VT323'; font-size:20px; background:transparent; }
+.btn-3d{
+  font-family:'Press Start 2P'; font-size:10px; padding:8px 12px; background:#c0c0c0; border:2px outset #dfdfdf; cursor:pointer; box-shadow:1px 1px 0 #000;
+}
+.btn-3d:active{ border:2px inset #808080; transform:translate(1px,1px); }
+.btn-3d.small{ font-size:8px; padding:5px 8px; }
+.btn-3d.red{ background:#ff0000; color:#fff; }
+.btn-3d.send-btn{ background:#000080; color:#fff; min-width:110px; }
+.file-label{ cursor:pointer; position:relative; }
+.error{ color:red; font-weight:bold; margin:6px 0; min-height:18px; }
+.hint marquee{ background:#000; color:#0f0; font-size:14px; padding:2px; border:1px solid #0f0; }
+.footer-90s{ margin-top:10px; text-align:center; font-size:12px; background:#000080; color:#fff; padding:6px; }
+.counter{ background:#000; color:#0f0; padding:2px 6px; border:1px inset #808080; font-family:monospace; letter-spacing:2px; }
+
+/* APP LAYOUT */
+#app{ height:100vh; display:flex; flex-direction:column; }
+.top-bar{
+  height:42px; background:#c0c0c0; border-bottom:2px solid #000; display:flex; justify-content:space-between; align-items:center; padding:0 8px; flex-shrink:0;
+  box-shadow: inset 0 1px #fff;
+}
+.logo-mini{ font-family:'Press Start 2P'; font-size:10px; background:linear-gradient(90deg, #ff00ff, #00ffff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.status-real{ background:#000; color:#0f0; font-size:12px; padding:2px 6px; border:1px inset #808080; margin-left:10px; }
+.avatar-mini{ width:28px; height:28px; border:2px inset #808080; background:#fff; object-fit:cover; image-rendering:pixelated; }
+.top-right{ display:flex; align-items:center; gap:6px; font-size:16px; }
+
+.main-grid{
+  flex:1; display:grid; grid-template-columns:280px 1fr 300px; gap:8px; padding:8px; overflow:hidden; min-height:0;
+}
+.panel{ display:flex; flex-direction:column; min-height:0; overflow:hidden; }
+.panel-body{ flex:1; overflow:auto; padding:8px; background:#c0c0c0; min-height:0; }
+.small-window .panel-body{ overflow:visible; }
+
+/* CONTACTS */
+.add-contact, .create-group{ background:#fff; border:2px inset #808080; padding:6px; margin-bottom:6px; }
+.add-contact input, .create-group input{ width:100%; font-family:'VT323'; font-size:16px; border:1px solid #000; padding:4px; margin:2px 0; }
+.search-result{ font-size:14px; margin-top:4px; }
+.contacts-list, .chats-list{ display:flex; flex-direction:column; gap:4px; }
+.contact-item, .chat-item{
+  display:flex; align-items:center; gap:6px; background:#dfdfdf; border:2px outset #fff; padding:4px; cursor:pointer; font-size:16px;
+}
+.contact-item:hover, .chat-item:hover{ background:#000080; color:#fff; }
+.contact-item.active, .chat-item.active{ background:#000080; color:#fff; border:2px inset #000; }
+.contact-item img, .chat-item img{ width:32px; height:32px; border:1px solid #000; background:#fff; object-fit:cover; image-rendering:pixelated; }
+.chat-item .meta{ font-size:12px; opacity:0.8; }
+.unread{ background:#ff0000; color:#fff; font-size:10px; padding:1px 5px; border-radius:10px; font-family:monospace; }
+.panel-hint{ font-size:12px; background:#ffffcc; border:1px dashed #000; padding:4px; margin-top:6px; }
+
+/* CHAT */
+.chat-panel{ min-width:0; }
+.messages{ display:flex; flex-direction:column; gap:6px; padding-bottom:10px; min-height:300px; }
+.welcome-90s{ background:#fff; border:2px inset #808080; padding:10px; font-size:14px; }
+.welcome-90s h2{ font-family:'Press Start 2P'; font-size:11px; color:#000080; }
+.msg{
+  max-width:75%; padding:6px 8px; font-size:16px; line-height:1.2; border:2px outset #fff; position:relative; word-break:break-word;
+}
+.msg.me{ align-self:flex-end; background:#ffffcc; border-color:#808000; }
+.msg.other{ align-self:flex-start; background:#fff; }
+.msg .meta{ font-size:11px; color:#404040; margin-top:4px; display:flex; gap:6px; align-items:center; }
+.msg img, .msg video{ max-width:100%; max-height:220px; border:1px solid #000; display:block; margin-top:4px; background:#000; }
+.status{ font-size:11px; }
+.status.delivered{ color:#000080; }
+.status.read{ color:#008000; }
+.typing{ height:14px; font-size:12px; color:#000080; font-style:italic; padding:0 4px; }
+.chat-input-area{ border-top:2px groove #fff; padding-top:6px; background:#c0c0c0; }
+.input-toolbar{ display:flex; gap:6px; align-items:center; margin-bottom:4px; flex-wrap:wrap; }
+.file-name{ font-size:12px; color:#000080; }
+.delivered-hint{ margin-left:auto; font-size:11px; background:#000; color:#0f0; padding:1px 4px; }
+.input-row{ display:flex; gap:6px; }
+.input-row textarea{ flex:1; font-family:'VT323'; font-size:18px; border:2px inset #808080; padding:6px; resize:none; background:#fff; }
+.voice-status{ background:#000; color:#0f0; font-size:12px; padding:4px; border:1px inset #0f0; margin-top:4px; font-family:monospace; }
+
+/* RIGHT */
+.right-panel{ display:flex; flex-direction:column; gap:8px; overflow:auto; }
+.winamp{ background:#000; color:#0f0; padding:6px; border:2px inset #404040; }
+.winamp-display{ background:#0a0a0a; color:#0f0; font-family:monospace; font-size:12px; padding:4px; border:1px inset #333; margin-bottom:6px; text-transform:uppercase; }
+.winamp audio{ width:100%; height:28px; }
+.playlist{ margin-top:6px; display:flex; flex-direction:column; gap:2px; max-height:120px; overflow:auto; }
+.track{ font-size:13px; padding:3px 4px; background:#111; border:1px solid #333; cursor:pointer; display:flex; justify-content:space-between; }
+.track.active{ background:#0f0; color:#000; }
+.track:hover{ background:#333; }
+.winamp-hint{ font-size:11px; color:#808080; margin-top:4px; }
+.tabs{ display:flex; gap:4px; margin-bottom:6px; }
+.tab-btn{ flex:1; font-family:'Press Start 2P'; font-size:7px; padding:6px; background:#c0c0c0; border:2px outset #fff; cursor:pointer; }
+.tab-btn.active{ background:#000080; color:#fff; border:2px inset #000; }
+.tab-content{ display:none; }
+.tab-content.active{ display:block; }
+
+/* Minesweeper */
+#minesweeper{ display:grid; grid-template-columns:repeat(9, 26px); gap:2px; background:#808080; padding:4px; border:2px inset #fff; width:fit-content; margin:0 auto; }
+.cell{ width:26px; height:26px; background:#c0c0c0; border:2px outset #fff; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:14px; cursor:pointer; user-select:none; }
+.cell.revealed{ border:1px solid #808080; background:#dfdfdf; }
+.cell.mine{ background:#ff0000; }
+.cell.flag{ background:#ffff00; }
+
+/* Egg game */
+#eggCanvas{ background: linear-gradient(#87ceeb, #e0f6ff); border:2px inset #808080; display:block; margin:0 auto; image-rendering:pixelated; }
+.egg-controls{ text-align:center; margin-top:4px; font-size:14px; }
+
+/* Modes grid */
+.modes-grid{ display:grid; grid-template-columns:1fr 1fr; gap:4px; }
+.mode-btn{ font-family:'VT323'; font-size:14px; padding:6px; border:2px outset #fff; cursor:pointer; background:#dfdfdf; }
+.mode-btn.active{ border:2px inset #000; background:#000080; color:#fff; }
+
+/* Bottom bar */
+.bottom-bar{ height:22px; background:#c0c0c0; border-top:2px solid #fff; display:flex; justify-content:space-between; align-items:center; padding:0 6px; font-size:11px; flex-shrink:0; }
+
+/* OVERLAYS */
+/* Evil mode */
+body.evil{ background:#0a0000 !important; filter:contrast(1.2); }
+body.evil .window{ background:#1a0000; border-color:#ff0000; }
+body.evil .title-bar{ background:linear-gradient(90deg, #400000, #ff0000); }
+body.evil #evilOverlay{ display:block; position:fixed; inset:0; pointer-events:none; background: radial-gradient(ellipse at center, transparent 60%, rgba(255,0,0,0.25)), repeating-linear-gradient(0deg, rgba(255,0,0,0.07) 0 2px, transparent 2px 4px); z-index:9998; }
+body.evil .msg{ filter:hue-rotate(180deg); }
+
+/* Undertale */
+body.undertale{ background:#000 !important; color:#fff; font-family:'Press Start 2P', monospace; }
+body.undertale .window{ background:#000; border:2px solid #fff; color:#fff; box-shadow:none; }
+body.undertale .title-bar{ background:#fff; color:#000; }
+body.undertale .window-body, body.undertale .panel-body{ background:#000; color:#fff; }
+body.undertale .msg{ background:#000; border:1px solid #fff; color:#fff; font-family:'Press Start 2P'; font-size:8px; line-height:1.6; }
+body.undertale .msg.me{ border-color:#ff0; }
+body.undertale .btn-3d{ background:#000; color:#fff; border:1px solid #fff; font-family:'Press Start 2P'; font-size:7px; }
+body.undertale .input-row textarea{ background:#000; color:#fff; border:1px solid #fff; }
+body.undertale::after{ content:"* Ты чувствуешь решимость..."; position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#000; border:2px solid #fff; padding:6px 12px; font-family:'Press Start 2P'; font-size:8px; color:#fff; z-index:9998; }
+
+/* Night vision */
+body.nightvision{ background:#001100 !important; filter: sepia(1) hue-rotate(70deg) saturate(3) brightness(0.9); }
+body.nightvision #crt{ opacity:0.9; background: repeating-linear-gradient(0deg, rgba(0,255,0,0.12) 0 1px, transparent 1px 3px); }
+body.nightvision .window{ background:#0a1a0a; border-color:#0f0; }
+body.nightvision .title-bar{ background:#003300; color:#0f0; }
+body.nightvision::before{ content:"◉ NVG ON • IR • 1999"; position:fixed; top:50px; right:20px; background:rgba(0,255,0,0.15); border:1px solid #0f0; color:#0f0; font-family:monospace; font-size:10px; padding:4px 8px; z-index:9998; }
+
+/* Nyanket */
+body.nyanket{ background:#ffccff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="5" y="25">🐱</text></svg>') !important; }
+body.nyanket .window{ background:#fff0ff; border:2px solid #ff69b4; }
+body.nyanket .title-bar{ background:linear-gradient(90deg, #ff69b4, #ffcc00); }
+body.nyanket .msg{ border-radius:12px; }
+body.nyanket::after{ content:"ฅ^•ﻌ•^ฅ  Нянькет следит за тобой... мяу!"; position:fixed; bottom:10px; left:10px; background:#fff; border:2px solid #ff69b4; padding:4px 8px; font-size:14px; z-index:9998; border-radius:10px; }
+
+/* Psychedelic */
+body.psychedelic{ animation: hue 3s linear infinite; }
+@keyframes hue{ 0%{ filter:hue-rotate(0deg) saturate(2); } 100%{ filter:hue-rotate(360deg) saturate(2); } }
+body.psychedelic .psy{ display:block; position:fixed; inset:0; pointer-events:none; z-index:9998; background: radial-gradient(circle, rgba(255,0,255,0.15), transparent 40%), radial-gradient(circle at 80% 20%, rgba(0,255,255,0.15), transparent 40%); animation: psyMove 2s ease-in-out infinite alternate; }
+@keyframes psyMove{ 0%{ transform:scale(1) rotate(0deg); } 100%{ transform:scale(1.05) rotate(1deg); } }
+body.psychedelic .window{ animation: wobble 0.5s ease-in-out infinite alternate; }
+@keyframes wobble{ 0%{ transform:translate(0,0); } 100%{ transform:translate(1px,1px); } }
+
+/* Memes */
+body.memes{ background:#fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="60"><text x="10" y="30" font-size="30">😂</text><text x="50" y="50" font-size="20">👌</text></svg>') !important; }
+body.memes .window{ background:#ffffcc; border:3px dashed #ff0000; }
+body.memes .title-bar{ background:repeating-linear-gradient(45deg, #ff0, #ff0 10px, #000 10px, #000 20px); color:#fff; text-shadow:1px 1px 0 #000; }
+body.memes .msg{ font-family:Impact, sans-serif; text-transform:uppercase; letter-spacing:1px; }
+body.memes::after{ content:"🗿 СТОП МЕМЫ — ТЫ В РЕЖИМЕ МЕМАСИКОВ 🗿"; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-5deg); background:#ff0; border:4px solid #000; padding:10px 20px; font-family:Impact; font-size:18px; z-index:9998; pointer-events:none; opacity:0.9; }
+
+/* Responsive */
+@media(max-width:900px){
+  .main-grid{ grid-template-columns:1fr; overflow:auto; }
+  .right-panel{ order:-1; }
+  body{ overflow:auto; }
+  #app{ height:auto; min-height:100vh; }
+}
+
+/* Scrollbar 90s */
+::-webkit-scrollbar{ width:16px; height:16px; }
+::-webkit-scrollbar-track{ background:#c0c0c0; border:1px inset #808080; }
+::-webkit-scrollbar-thumb{ background:#c0c0c0; border:2px outset #fff; }
